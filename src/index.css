@@ -172,6 +172,11 @@
   html.dark .module-index-mobile {
     background: rgba(2, 6, 23, 0.95) !important;
   }
+
+  html.dark .summary-smart-panel {
+    background: linear-gradient(180deg, #0f172a 0%, #172554 100%) !important;
+    border-color: #334155 !important;
+  }
 }
 
 @layer components {

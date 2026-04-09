@@ -48,7 +48,7 @@ function AppShell({ children, resolvedTheme, toggleTheme }) {
       />
       <div className="grid grid-cols-1 gap-4 px-2 pb-24 md:gap-5 md:px-0 xl:grid-cols-[288px_minmax(560px,720px)_420px]">
         <SideNav />
-        <main className="space-y-4">{children}</main>
+        <main className="min-w-0 space-y-4">{children}</main>
         <RightPanel />
       </div>
       <MobileNav />
@@ -193,11 +193,11 @@ function StudiesPage() {
   }, []);
 
   return (
-    <motion.section {...pageMotion} className="space-y-6">
+    <motion.section {...pageMotion} className="space-y-4 md:space-y-6">
       <div className="panel overflow-hidden p-0">
         <div className="studies-hero border-b border-slate-200 bg-gradient-to-r from-brand-700 via-brand-600 to-violet-600 px-4 py-5 text-white md:px-6 md:py-6">
-          <h2 className="text-2xl font-extrabold md:text-3xl">Área de Estudos</h2>
-          <p className="mt-1 text-sm leading-7 text-blue-100/95">
+          <h2 className="text-xl font-extrabold md:text-3xl">Área de Estudos</h2>
+          <p className="mt-1 text-sm leading-6 md:leading-7 text-blue-100/95">
             Escolha uma disciplina e continue evoluindo.
           </p>
           <div className="relative mt-4 max-w-xl">
@@ -213,7 +213,7 @@ function StudiesPage() {
       </div>
 
       {loadingHub ? (
-        <div className="grid gap-4 md:grid-cols-[1.3fr_1fr]">
+        <div className="grid gap-3 md:gap-4 md:grid-cols-[1.3fr_1fr]">
           <div className="panel space-y-3">
             <Skeleton className="h-4 w-36" />
             <Skeleton className="h-8 w-52" />
@@ -228,14 +228,14 @@ function StudiesPage() {
           </div>
         </div>
       ) : (
-      <div className="grid gap-4 md:grid-cols-[1.3fr_1fr]">
+      <div className="grid gap-3 md:gap-4 md:grid-cols-[1.3fr_1fr]">
         <div className="panel panel-hover overflow-hidden border-brand-100 p-0">
-          <div className="continue-card-head bg-gradient-to-r from-white to-brand-50/70 px-5 py-4">
+          <div className="continue-card-head bg-gradient-to-r from-white to-brand-50/70 px-4 py-4 md:px-5">
             <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Continuar estudando</p>
-            <h3 className="mt-1 text-xl font-bold text-ink-900">{continueSubject.name}</h3>
-            <p className="mt-1 text-sm text-ink-500">{continueSubject.module1.title}</p>
+            <h3 className="mt-1 text-lg font-bold md:text-xl text-ink-900">{continueSubject.name}</h3>
+            <p className="mt-1 break-words text-sm text-ink-500">{continueSubject.module1.title}</p>
           </div>
-          <div className="space-y-4 px-5 py-4">
+          <div className="space-y-4 px-4 py-4 md:px-5">
             <div>
               <div className="mb-2 flex items-center justify-between">
                 <p className="text-xs font-semibold text-ink-500">Progresso atual</p>
@@ -268,17 +268,17 @@ function StudiesPage() {
               <div className="h-full rounded-full bg-gradient-to-r from-brand-500 to-violet-500" style={{ width: `${totalProgress}%` }} />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2">
             <div className="panel-muted text-center">
-              <p className="text-lg font-bold text-ink-900">{currentUser.completedModules}</p>
+                <p className="text-base font-bold md:text-lg text-ink-900">{currentUser.completedModules}</p>
               <p className="text-xs text-ink-500">Concluídos</p>
             </div>
             <div className="panel-muted text-center">
-              <p className="text-lg font-bold text-ink-900">{currentUser.streak}</p>
+                <p className="text-base font-bold md:text-lg text-ink-900">{currentUser.streak}</p>
               <p className="text-xs text-ink-500">Sequência</p>
             </div>
             <div className="panel-muted text-center">
-              <p className="text-lg font-bold text-ink-900">{inProgress}</p>
+                <p className="text-base font-bold md:text-lg text-ink-900">{inProgress}</p>
               <p className="text-xs text-ink-500">Em andamento</p>
             </div>
           </div>
@@ -286,14 +286,12 @@ function StudiesPage() {
       </div>
       )}
 
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="section-title">Disciplinas</h3>
-          <p className="text-xs font-semibold text-ink-500">{filteredSubjects.length} resultados</p>
-        </div>
+      <div className="flex items-center justify-between">
+        <h3 className="section-title">Disciplinas</h3>
+        <p className="text-xs font-semibold text-ink-500">{filteredSubjects.length} resultados</p>
       </div>
       {filteredSubjects.length ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-3 md:gap-4 md:grid-cols-2 xl:grid-cols-3">
           {filteredSubjects.map((subject) => (
             <SubjectCard key={subject.id} subject={subject} />
           ))}
@@ -325,7 +323,7 @@ function SubjectPage() {
   }, [subjectId]);
 
   return (
-    <motion.section {...pageMotion} className="space-y-6">
+    <motion.section {...pageMotion} className="space-y-4 md:space-y-6">
       {loadingSubject ? (
         <div className="space-y-4">
           <div className="panel space-y-3">
@@ -372,9 +370,7 @@ function SubjectPage() {
         </div>
       </div>
 
-      <div className="space-y-3">
-        <h3 className="section-title">Módulos da disciplina</h3>
-      </div>
+      <h3 className="section-title">Módulos da disciplina</h3>
 
       <div className="grid gap-3 md:grid-cols-3 md:gap-4">
         <Link to={`/app/disciplinas/${subject.id}/modulo-1`} className="panel panel-hover overflow-hidden border-brand-200 p-0">
@@ -500,7 +496,7 @@ function ModulePage() {
   }
 
   return (
-    <motion.section {...pageMotion} className="space-y-6">
+    <motion.section {...pageMotion} className="space-y-4 md:space-y-6">
       {loadingModule ? (
         <div className="space-y-4">
           <div className="panel space-y-3">
@@ -566,7 +562,7 @@ function ModulePage() {
         </div>
       </div>
 
-      <div className="grid gap-3 md:gap-4 lg:grid-cols-[220px_1fr_360px]">
+      <div className="grid gap-3 md:gap-4 lg:grid-cols-[220px_minmax(0,1fr)_320px] xl:grid-cols-[220px_minmax(0,1fr)_360px]">
         <aside className="panel hidden h-fit lg:block">
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">Índice do módulo</p>
           <div className="mt-3 space-y-1.5">
@@ -586,15 +582,15 @@ function ModulePage() {
           </div>
         </aside>
 
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <div className="module-index-mobile sticky top-[70px] z-10 -mx-1 mb-1 overflow-x-auto bg-slate-50/95 px-1 pb-1 pt-1 backdrop-blur lg:hidden">
             <div className="flex gap-2 pb-1">
               {sections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => goToSection(section.id)}
-                  className={`whitespace-nowrap rounded-xl px-3 py-2 text-xs font-semibold transition ${
-                    activeSection === section.id ? "bg-brand-50 text-brand-700" : "bg-white text-slate-600 border border-slate-200"
+                  className={`whitespace-nowrap rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+                    activeSection === section.id ? "border-brand-200 bg-brand-50 text-brand-700" : "border-slate-200 bg-white text-slate-600"
                   }`}
                 >
                   {section.label}
@@ -614,14 +610,14 @@ function ModulePage() {
               <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Explicação principal</p>
               <h3 className="mt-1 text-lg font-bold text-ink-900">Conceitos essenciais</h3>
             </div>
-            <p className="mt-2 text-sm leading-7 text-ink-700">{moduleData.explanation}</p>
+            <p className="mt-2 break-words text-sm leading-7 text-ink-700">{moduleData.explanation}</p>
           </article>
 
           <article id="exemplos" className="panel scroll-mt-24">
             <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Exemplos</p>
             <div className="mt-3 space-y-2">
               {moduleData.examples.map((example) => (
-                <div key={example} className="study-example-box rounded-xl border border-brand-100 bg-brand-50/50 p-3 text-sm text-ink-700">
+                <div key={example} className="study-example-box rounded-xl border border-brand-100 bg-brand-50/50 p-3 text-sm leading-6 text-ink-700">
                   {example}
                 </div>
               ))}
@@ -662,7 +658,7 @@ function ModulePage() {
                           onClick={() =>
                             setSelectedAnswers((prev) => ({ ...prev, [question.id]: optIndex }))
                           }
-                          className={`w-full rounded-lg border px-3 py-2.5 text-left text-sm transition ${
+                          className={`w-full break-words rounded-lg border px-3 py-2.5 text-left text-sm leading-6 transition ${
                             showResult && isCorrect
                               ? "border-emerald-300 bg-emerald-50 text-emerald-700"
                               : showResult && selected && !isCorrect
@@ -678,7 +674,7 @@ function ModulePage() {
                     })}
                   </div>
                   {quizSubmitted && (
-                    <p className="mt-2 text-xs text-slate-600">
+                    <p className="mt-2 break-words text-xs leading-5 text-slate-600">
                       Resposta correta: <span className="font-semibold">{question.options[question.answer]}</span>. {question.explanation}
                     </p>
                   )}
@@ -693,12 +689,12 @@ function ModulePage() {
         </div>
 
         <aside className="space-y-4">
-          <div className="panel border-brand-100 bg-gradient-to-b from-white to-brand-50/50">
+          <div className="summary-smart-panel panel border-brand-100 bg-gradient-to-b from-white to-brand-50/50">
             <p className="flex items-center gap-2 text-sm font-bold text-brand-700">
               <WandSparkles size={16} /> Resumo Inteligente
             </p>
             <p className="mt-1 text-xs text-ink-500">Gere revisões rápidas com linguagem clara e objetiva para o ensino médio.</p>
-            <div className="mt-3 grid gap-2">
+            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
               <button onClick={() => generateSummary("modulo")} className="btn-primary text-xs">
                 Resumir módulo
               </button>
@@ -725,7 +721,7 @@ function ModulePage() {
                   <Sparkles size={14} />
                   Resumo gerado
                 </p>
-                <pre className="whitespace-pre-wrap text-xs leading-6 text-ink-700">{summary}</pre>
+                <pre className="whitespace-pre-wrap break-words text-xs leading-6 text-ink-700">{summary}</pre>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   <button
                     onClick={() => showToast("Resumo copiado")}
