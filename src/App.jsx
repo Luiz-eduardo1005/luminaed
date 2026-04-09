@@ -39,17 +39,23 @@ const pageMotion = {
   transition: { duration: 0.22, ease: "easeOut" },
 };
 
-function AppShell({ children, resolvedTheme, toggleTheme }) {
+function AppShell({ children, resolvedTheme, toggleTheme, showRightPanel = true }) {
   return (
     <div className="mx-auto min-h-screen max-w-[1480px] p-0 md:p-4 lg:p-5">
       <TopBar
         resolvedTheme={resolvedTheme}
         toggleTheme={toggleTheme}
       />
-      <div className="grid grid-cols-1 gap-4 px-2 pb-24 md:gap-5 md:px-0 xl:grid-cols-[288px_minmax(560px,720px)_420px]">
+      <div
+        className={`grid grid-cols-1 gap-4 px-2 pb-24 md:gap-5 md:px-0 ${
+          showRightPanel
+            ? "xl:grid-cols-[272px_minmax(0,1fr)_360px]"
+            : "xl:grid-cols-[272px_minmax(0,1fr)]"
+        }`}
+      >
         <SideNav />
         <main className="min-w-0 space-y-4">{children}</main>
-        <RightPanel />
+        {showRightPanel ? <RightPanel /> : null}
       </div>
       <MobileNav />
     </div>
@@ -562,7 +568,7 @@ function ModulePage() {
         </div>
       </div>
 
-      <div className="grid gap-3 md:gap-4 lg:grid-cols-[220px_minmax(0,1fr)_320px] xl:grid-cols-[220px_minmax(0,1fr)_360px]">
+      <div className="grid gap-3 md:gap-4 lg:grid-cols-[220px_minmax(0,1fr)] 2xl:grid-cols-[220px_minmax(0,1fr)_340px]">
         <aside className="panel hidden h-fit lg:block">
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">Índice do módulo</p>
           <div className="mt-3 space-y-1.5">
@@ -688,7 +694,7 @@ function ModulePage() {
           </article>
         </div>
 
-        <aside className="space-y-4">
+        <aside className="space-y-4 lg:col-span-2 2xl:col-span-1">
           <div className="summary-smart-panel panel border-brand-100 bg-gradient-to-b from-white to-brand-50/50">
             <p className="flex items-center gap-2 text-sm font-bold text-brand-700">
               <WandSparkles size={16} /> Resumo Inteligente
@@ -900,6 +906,9 @@ function PlaceholderPage({ title }) {
 
 export default function App() {
   const location = useLocation();
+  const hideGlobalRightPanel =
+    /\/app\/disciplinas\/[^/]+$/.test(location.pathname) ||
+    /\/app\/disciplinas\/[^/]+\/modulo-1$/.test(location.pathname);
   const [themeOverride, setThemeOverride] = useState(() => {
     if (typeof window === "undefined") return null;
     return localStorage.getItem("themeOverride");
@@ -951,6 +960,7 @@ export default function App() {
               <AppShell
                 resolvedTheme={resolvedTheme}
                 toggleTheme={toggleTheme}
+                showRightPanel={!hideGlobalRightPanel}
               >
                 <Routes>
                   <Route path="feed" element={<FeedPage />} />
