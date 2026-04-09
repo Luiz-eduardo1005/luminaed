@@ -1,0 +1,176 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    @apply border-slate-200;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight text-slate-900;
+  }
+
+  html.dark body {
+    background: #020617;
+    color: #e2e8f0;
+  }
+
+  html.dark .panel {
+    background: #0f172a;
+    border-color: #1e293b;
+    box-shadow: none;
+  }
+
+  html.dark .panel-muted {
+    background: #0b1220;
+    border-color: #1e293b;
+  }
+
+  html.dark .pill {
+    background: #0f172a;
+    border-color: #334155;
+    color: #94a3b8;
+  }
+
+  html.dark .btn-soft {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+
+  html.dark .btn-soft:hover {
+    background: #131d31;
+  }
+
+  html.dark .input-base {
+    background: #0b1220;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+
+  html.dark .text-ink-900,
+  html.dark .text-slate-900 {
+    color: #e2e8f0 !important;
+  }
+
+  html.dark .text-ink-800,
+  html.dark .text-slate-800 {
+    color: #cbd5e1 !important;
+  }
+
+  html.dark .text-ink-700,
+  html.dark .text-slate-700 {
+    color: #cbd5e1 !important;
+  }
+
+  html.dark .text-ink-600,
+  html.dark .text-slate-600 {
+    color: #94a3b8 !important;
+  }
+
+  html.dark .text-ink-500,
+  html.dark .text-slate-500,
+  html.dark .text-slate-400 {
+    color: #94a3b8 !important;
+  }
+
+  html.dark .bg-slate-50 {
+    background-color: #0b1220 !important;
+  }
+
+  html.dark .border-slate-200 {
+    border-color: #334155 !important;
+  }
+
+  html.dark .subject-card-head {
+    background: linear-gradient(90deg, #0f172a 0%, #172554 100%) !important;
+  }
+
+  html.dark .subject-banner,
+  html.dark .module-banner {
+    background: linear-gradient(90deg, #0f172a 0%, #1e293b 45%, #312e81 100%) !important;
+  }
+
+  html.dark .studies-hero {
+    background: linear-gradient(90deg, #312e81 0%, #3730a3 50%, #4c1d95 100%) !important;
+  }
+
+  html.dark .continue-card-head {
+    background: linear-gradient(90deg, #0f172a 0%, #1e293b 60%, #312e81 100%) !important;
+  }
+
+  html.dark .module-available-head {
+    background: #1e293b !important;
+  }
+
+  html.dark .study-example-box {
+    background: #172554 !important;
+    border-color: #3730a3 !important;
+  }
+
+  html.dark .quiz-card,
+  html.dark .summary-loading-card,
+  html.dark .summary-result-card {
+    background: #0b1220 !important;
+    border-color: #334155 !important;
+  }
+
+  html.dark .bg-brand-50 {
+    background-color: rgba(49, 46, 129, 0.2) !important;
+  }
+
+  html.dark .bg-blue-50 {
+    background-color: rgba(30, 58, 138, 0.2) !important;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border bg-white p-4 md:p-5 shadow-sm transition-all duration-200;
+  }
+
+  .panel-hover {
+    @apply hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .panel-muted {
+    @apply rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3 md:p-4;
+  }
+
+  .pill {
+    @apply rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-500;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:ring-offset-2;
+  }
+
+  .btn-soft {
+    @apply inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:ring-offset-2;
+  }
+
+  .input-base {
+    @apply w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-300;
+  }
+
+  .section-title {
+    @apply text-lg font-bold text-slate-900;
+  }
+
+  .section-subtitle {
+    @apply text-sm text-slate-500;
+  }
+}
