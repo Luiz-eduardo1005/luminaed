@@ -15,7 +15,7 @@ export default function TopBar({ resolvedTheme, toggleTheme }) {
         <div className="ml-auto flex items-center gap-0.5 md:gap-1">
           <button
             onClick={toggleTheme}
-            className="mr-1 rounded-xl border border-slate-200 bg-white p-2 text-slate-600 transition hover:bg-slate-100"
+            className="top-nav-button mr-1 rounded-xl border border-slate-200 bg-white p-2 text-slate-600 transition hover:bg-slate-100"
             aria-label="Alternar tema"
             title="Alternar tema"
           >
@@ -37,6 +37,10 @@ export default function TopBar({ resolvedTheme, toggleTheme }) {
             <BookOpen size={18} />
           </Link>
         </div>
+      </div>
+      <div className="relative mt-2 md:hidden">
+        <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={15} />
+        <input className="input-base pl-9 text-sm" placeholder="Buscar conteúdos e alunos..." />
       </div>
     </header>
   );

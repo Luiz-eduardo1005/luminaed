@@ -11,7 +11,7 @@ const items = [
 
 export default function MobileNav() {
   return (
-    <nav className="fixed bottom-3 left-1/2 z-40 w-[95%] -translate-x-1/2 rounded-2xl border border-slate-200 bg-white/95 p-1.5 shadow-lg backdrop-blur md:hidden" style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}>
+    <nav className="mobile-nav fixed bottom-3 left-1/2 z-40 w-[95%] -translate-x-1/2 rounded-2xl border border-slate-200 bg-white/95 p-1.5 shadow-lg backdrop-blur md:hidden" style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}>
       <div className="grid grid-cols-5 gap-1">
         {items.map((item) => {
           const Icon = item.icon;

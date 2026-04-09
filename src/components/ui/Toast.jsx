@@ -29,7 +29,7 @@ export function ToastProvider({ children }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 6, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="panel pointer-events-auto flex items-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2.5 shadow-lg"
+              className="toast-card panel pointer-events-auto flex items-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2.5 shadow-lg"
             >
               <CheckCircle2 size={15} className="text-emerald-600" />
               <p className="text-xs font-semibold text-slate-700">{toast.message}</p>

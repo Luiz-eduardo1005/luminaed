@@ -6,7 +6,7 @@ export default function RightPanel() {
   const { showToast } = useToast();
 
   return (
-    <aside className="hidden w-[420px] lg:block">
+    <aside className="hidden w-[390px] xl:block">
       <div className="grid grid-cols-2 gap-3">
       <div className="panel panel-hover col-span-2">
         <p className="text-sm font-bold text-ink-900">Progresso da semana</p>

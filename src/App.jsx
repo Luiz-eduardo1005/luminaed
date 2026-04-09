@@ -56,39 +56,6 @@ function AppShell({ children, resolvedTheme, toggleTheme }) {
   );
 }
 
-function LandingPage() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-indigo-50/40 px-3 py-8 md:px-4 md:py-10">
-      <div className="mx-auto max-w-5xl">
-        <div className="panel overflow-hidden border-0 bg-gradient-to-r from-brand-700 to-blue-600 p-5 text-white shadow-card md:p-8">
-          <p className="text-sm uppercase tracking-[0.16em] text-blue-100">Plataforma educacional + rede social</p>
-          <h1 className="mt-3 text-3xl font-extrabold md:text-5xl">{brand.name}</h1>
-          <p className="mt-2 text-lg text-blue-100/95">{brand.slogan}</p>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-blue-100/95">
-            Uma experiência moderna para estudantes do ensino médio aprenderem com mais organização, colaboração e motivação.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/auth" className="rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-brand-700 shadow-soft transition hover:-translate-y-0.5">
-              Entrar na plataforma
-            </Link>
-            <Link to="/app/feed" className="rounded-xl border border-blue-200 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10">
-              Ver demonstração
-            </Link>
-          </div>
-        </div>
-
-        <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {["Rede social de estudos", "Módulos organizados", "Resumo inteligente", "Aprendizagem colaborativa"].map((item) => (
-            <div key={item} className="panel panel-hover">
-              <p className="text-sm font-semibold text-ink-700">{item}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function FeedPage() {
   const [tab, setTab] = useState("Para você");
   const [draft, setDraft] = useState("");
@@ -104,7 +71,7 @@ function FeedPage() {
   }, []);
 
   return (
-    <motion.section {...pageMotion} className="space-y-4">
+    <motion.section {...pageMotion} className="space-y-3 md:space-y-4">
       <div className="panel p-0">
         <div className="border-b border-slate-200 px-5 py-4">
           <h2 className="section-title">Início</h2>
@@ -138,7 +105,7 @@ function FeedPage() {
               className="input-base min-h-24 resize-none border-0 bg-transparent px-0 text-[15px] leading-7 shadow-none focus:shadow-none"
               placeholder="Compartilhe uma dúvida, conquista ou meta de estudo..."
             />
-            <div className="mt-3 flex items-center justify-between border-t border-slate-200 pt-3">
+            <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-200 pt-3">
               <button className="btn-soft gap-2 px-3 py-2 text-xs">
                 <ImagePlus size={14} /> Mídia
               </button>
@@ -166,7 +133,7 @@ function FeedPage() {
                     setTimeout(() => setPublished(false), 1800);
                   }
                 }}
-                className={`btn-primary gap-2 px-4 py-2 text-xs ${draft.trim() ? "" : "opacity-80"}`}
+                className={`btn-primary gap-2 px-3 py-2 text-xs sm:px-4 ${draft.trim() ? "" : "opacity-80"}`}
               >
                 <Send size={14} />
                 Publicar
@@ -182,7 +149,7 @@ function FeedPage() {
         </motion.div>
       )}
 
-      <div className="panel border-brand-100 bg-gradient-to-r from-brand-50 to-blue-50/60">
+      <div className="feed-fixed-post panel border-brand-100 bg-gradient-to-r from-brand-50 to-blue-50/60">
         <p className="text-xs font-semibold uppercase tracking-wider text-brand-700">Postagem fixa</p>
         <h2 className="mt-1 text-lg font-bold text-ink-900">Bem-vindo(a) ao LuminaEd</h2>
         <p className="mt-1 text-sm leading-6 text-ink-500">
@@ -409,7 +376,7 @@ function SubjectPage() {
         <h3 className="section-title">Módulos da disciplina</h3>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-3 md:grid-cols-3 md:gap-4">
         <Link to={`/app/disciplinas/${subject.id}/modulo-1`} className="panel panel-hover overflow-hidden border-brand-200 p-0">
           <div className="module-available-head bg-brand-50/70 px-5 py-3">
             <p className="text-xs font-semibold text-brand-700">Disponível agora</p>
@@ -599,7 +566,7 @@ function ModulePage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[220px_1fr_360px]">
+      <div className="grid gap-3 md:gap-4 lg:grid-cols-[220px_1fr_360px]">
         <aside className="panel hidden h-fit lg:block">
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">Índice do módulo</p>
           <div className="mt-3 space-y-1.5">
@@ -620,7 +587,7 @@ function ModulePage() {
         </aside>
 
         <div className="space-y-4">
-          <div className="mb-1 overflow-x-auto lg:hidden">
+          <div className="module-index-mobile sticky top-[70px] z-10 -mx-1 mb-1 overflow-x-auto bg-slate-50/95 px-1 pb-1 pt-1 backdrop-blur lg:hidden">
             <div className="flex gap-2 pb-1">
               {sections.map((section) => (
                 <button
@@ -682,7 +649,7 @@ function ModulePage() {
             </p>
             <div className="mt-3 space-y-4">
               {moduleData.quiz.map((question, index) => (
-                <div key={question.id} className="quiz-card rounded-xl border border-slate-200 bg-white p-4">
+                <div key={question.id} className="quiz-card rounded-xl border border-slate-200 bg-white p-3 sm:p-4">
                   <p className="text-sm font-semibold text-ink-800">{index + 1}. {question.question}</p>
                   <div className="mt-3 space-y-2">
                     {question.options.map((option, optIndex) => {
@@ -695,7 +662,7 @@ function ModulePage() {
                           onClick={() =>
                             setSelectedAnswers((prev) => ({ ...prev, [question.id]: optIndex }))
                           }
-                          className={`w-full rounded-lg border px-3 py-2 text-left text-sm transition ${
+                          className={`w-full rounded-lg border px-3 py-2.5 text-left text-sm transition ${
                             showResult && isCorrect
                               ? "border-emerald-300 bg-emerald-50 text-emerald-700"
                               : showResult && selected && !isCorrect
@@ -980,7 +947,7 @@ export default function App() {
     <ToastProvider>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<Navigate to="/app/feed" replace />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route
             path="/app/*"
