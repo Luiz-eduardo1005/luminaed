@@ -843,20 +843,149 @@ function NotificationsPage() {
 }
 
 function MessagesPage() {
+  const [draftMessage, setDraftMessage] = useState("");
+  const [activeConversationId, setActiveConversationId] = useState(messages[0]?.id ?? null);
+  const [localConversations, setLocalConversations] = useState(() =>
+    messages.map((message) => ({
+      ...message,
+      unread: message.id === "m1" ? 2 : 0,
+      thread: [
+        {
+          id: `${message.id}-initial`,
+          sender: message.with,
+          text: message.preview,
+          time: message.last,
+        },
+      ],
+    }))
+  );
+
+  const activeConversation = useMemo(
+    () => localConversations.find((conversation) => conversation.id === activeConversationId) ?? null,
+    [activeConversationId, localConversations]
+  );
+
+  function openConversation(conversationId) {
+    setActiveConversationId(conversationId);
+    setLocalConversations((prev) =>
+      prev.map((conversation) =>
+        conversation.id === conversationId ? { ...conversation, unread: 0 } : conversation
+      )
+    );
+  }
+
+  function sendMessage() {
+    const text = draftMessage.trim();
+    if (!text || !activeConversation) return;
+
+    setLocalConversations((prev) =>
+      prev.map((conversation) =>
+        conversation.id === activeConversation.id
+          ? {
+              ...conversation,
+              preview: text,
+              last: "agora",
+              thread: [
+                ...conversation.thread,
+                {
+                  id: `${conversation.id}-${Date.now()}`,
+                  sender: currentUser.name,
+                  text,
+                  time: "agora",
+                },
+              ],
+            }
+          : conversation
+      )
+    );
+    setDraftMessage("");
+  }
+
   return (
     <motion.section {...pageMotion} className="space-y-3">
       <div className="panel">
         <h2 className="flex items-center gap-2 text-lg font-bold"><MessageCircle size={18} /> Mensagens</h2>
       </div>
-      {messages.length ? messages.map((m) => (
-        <div key={m.id} className="panel panel-hover">
-          <div className="flex items-center justify-between">
-            <p className="font-semibold">{m.with}</p>
-            <p className="text-xs text-ink-500">{m.last}</p>
+      {localConversations.length ? (
+        <div className="grid gap-3 md:grid-cols-[320px_minmax(0,1fr)]">
+          <div className="space-y-2">
+            {localConversations.map((conversation) => {
+              const isActive = conversation.id === activeConversationId;
+              return (
+                <button
+                  key={conversation.id}
+                  onClick={() => openConversation(conversation.id)}
+                  className={`panel w-full text-left transition ${
+                    isActive ? "border border-brand-200 bg-brand-50/60" : "panel-hover"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-semibold text-ink-900">{conversation.with}</p>
+                    <div className="flex items-center gap-2">
+                      {conversation.unread > 0 ? (
+                        <span className="rounded-full bg-brand-600 px-2 py-0.5 text-[10px] font-bold text-white">
+                          {conversation.unread}
+                        </span>
+                      ) : null}
+                      <p className="text-xs text-ink-500">{conversation.last}</p>
+                    </div>
+                  </div>
+                  <p className="mt-1 text-sm text-ink-500">{conversation.preview}</p>
+                </button>
+              );
+            })}
           </div>
-          <p className="mt-1 text-sm text-ink-500">{m.preview}</p>
+
+          <div className="panel">
+            {activeConversation ? (
+              <>
+                <div className="border-b border-slate-200 pb-3">
+                  <p className="font-semibold text-ink-900">{activeConversation.with}</p>
+                  <p className="text-xs text-ink-500">Conversa simulada (mock)</p>
+                </div>
+
+                <div className="mt-3 max-h-[360px] space-y-2 overflow-y-auto pr-1">
+                  {activeConversation.thread.map((item) => {
+                    const isMine = item.sender === currentUser.name;
+                    return (
+                      <div
+                        key={item.id}
+                        className={`max-w-[86%] rounded-xl px-3 py-2 text-sm ${
+                          isMine
+                            ? "ml-auto bg-brand-600 text-white"
+                            : "bg-slate-100 text-ink-800"
+                        }`}
+                      >
+                        <p>{item.text}</p>
+                        <p className={`mt-1 text-[11px] ${isMine ? "text-white/80" : "text-ink-500"}`}>
+                          {item.time}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-3 flex gap-2 border-t border-slate-200 pt-3">
+                  <input
+                    value={draftMessage}
+                    onChange={(event) => setDraftMessage(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") sendMessage();
+                    }}
+                    className="input-base"
+                    placeholder="Digite uma mensagem..."
+                  />
+                  <button onClick={sendMessage} className="btn-primary px-4">
+                    Enviar
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p className="text-sm text-ink-500">Selecione uma conversa para começar.</p>
+            )}
+          </div>
         </div>
-      )) : (
+      ) : (
         <EmptyState
           icon={MessageSquareOff}
           title="Nenhuma conversa iniciada"
