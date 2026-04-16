@@ -14,7 +14,8 @@ export const brand = {
   slogan: "Aprender junto, evoluir todo dia.",
 };
 
-export const feedbackFormUrl = "";
+export const feedbackFormUrl =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdl_dL2HWgJQyKHC--JPpr-Y5N90ipbo2Y9bcS73ypjGpEJ3w/viewform";
 
 export const currentUser = {
   id: "u0",
