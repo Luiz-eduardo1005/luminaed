@@ -6,7 +6,7 @@ export default function RightPanel() {
   const { showToast } = useToast();
 
   return (
-    <aside className="hidden w-[390px] xl:block">
+    <aside className="hidden w-full min-w-0 xl:block">
       <div className="grid grid-cols-2 gap-3">
       <div className="panel panel-hover col-span-2">
         <p className="text-sm font-bold text-ink-900">Progresso da semana</p>
@@ -36,14 +36,14 @@ export default function RightPanel() {
         <p className="text-sm font-bold text-ink-900">Sugestões para seguir</p>
         <div className="mt-3 space-y-2.5">
           {suggestions.map((s) => (
-            <div key={s.username} className="flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-50/60 p-2.5">
-              <div>
+            <div key={s.username} className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-slate-50/60 p-2.5">
+              <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold text-ink-900">{s.name}</p>
-                <p className="text-xs text-ink-500">@{s.username}</p>
+                <p className="truncate text-xs text-ink-500">@{s.username}</p>
               </div>
               <button
                 onClick={() => showToast(`Agora você segue @${s.username}`)}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-700 transition hover:bg-slate-100"
+                className="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-700 transition hover:bg-slate-100"
               >
                 Seguir
               </button>
