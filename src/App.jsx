@@ -423,13 +423,14 @@ function ModulePage() {
   const moduleData = subjectId ? disciplineContent[subjectId] : null;
   const [loadingModule, setLoadingModule] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [summary, setSummary] = useState("");
+  const [summary, setSummary] = useState(null);
   const [completed, setCompleted] = useState(false);
   const [message, setMessage] = useState("");
   const [activeSection, setActiveSection] = useState("intro");
   const [progressValue, setProgressValue] = useState(66);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [summaryMode, setSummaryMode] = useState("modulo");
   const { showToast } = useToast();
 
   if (!subject || !moduleData) return <Navigate to="/app/estudos" replace />;
@@ -476,6 +477,7 @@ function ModulePage() {
   function generateSummary(type) {
     setLoading(true);
     setMessage("");
+    setSummaryMode(type);
     const sectionMap = {
       intro: moduleData.intro,
       explicacao: moduleData.explanation,
@@ -488,8 +490,36 @@ function ModulePage() {
     setTimeout(() => {
       const targetText =
         type === "seção" ? sectionMap[activeSection] ?? moduleData.summaryBase : moduleData.summaryBase;
-      const base = `Resumo Inteligente (${type === "seção" ? "seção atual" : "módulo"})\n\n${subject.module1.title}\n\n${targetText}\n\nDica de revisão: resolva a miniatividade e releia a seção "${sections.find((s) => s.id === activeSection)?.label}".`;
-      setSummary(base);
+      const cleanedText = targetText
+        .replace(/\s+/g, " ")
+        .replace(/\s([,.!?;:])/g, "$1")
+        .trim();
+      const chunks = cleanedText
+        .split(/(?<=[.!?])\s+/)
+        .filter(Boolean);
+      const focusLabel =
+        type === "seção"
+          ? sections.find((s) => s.id === activeSection)?.label || "Seção atual"
+          : "Módulo completo";
+      const corePoints = chunks.slice(0, 3);
+      const quickReview = chunks.slice(0, 2).map((sentence, index) => ({
+        question: `Pergunta ${index + 1}`,
+        answer: sentence,
+      }));
+
+      const reviewPlan = [
+        `Releia ${type === "seção" ? `a seção "${focusLabel}"` : "os pontos principais do módulo"} em 5 minutos.`,
+        "Explique em voz alta os conceitos sem olhar o texto.",
+        "Resolva a miniatividade para validar a fixação.",
+      ];
+
+      setSummary({
+        title: `${subject.module1.title} - ${focusLabel}`,
+        context: type === "seção" ? "Resumo focado na seção atual." : "Resumo geral para revisão rápida.",
+        corePoints: corePoints.length ? corePoints : [cleanedText],
+        quickReview,
+        reviewPlan,
+      });
       setLoading(false);
       setMessage("Resumo gerado com sucesso! +5 XP de revisão");
     }, 1400);
@@ -726,12 +756,56 @@ function ModulePage() {
               >
                 <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-brand-700">
                   <Sparkles size={14} />
-                  Resumo gerado
+                  Resumo gerado ({summaryMode === "seção" ? "seção atual" : "módulo"})
                 </p>
-                <pre className="whitespace-pre-wrap break-words text-xs leading-6 text-ink-700">{summary}</pre>
+                <h4 className="text-sm font-bold text-ink-900">{summary.title}</h4>
+                <p className="mt-1 text-xs text-ink-500">{summary.context}</p>
+
+                <div className="mt-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">Pontos-chave</p>
+                  <ul className="mt-2 space-y-1.5 text-xs leading-6 text-ink-700">
+                    {summary.corePoints.map((point) => (
+                      <li key={point}>- {point}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">Cartoes de revisão</p>
+                  <div className="mt-2 space-y-2">
+                    {summary.quickReview.map((card) => (
+                      <div key={card.question} className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-xs">
+                        <p className="font-semibold text-ink-900">{card.question}</p>
+                        <p className="mt-1 text-ink-700">{card.answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">Plano de 10 minutos</p>
+                  <ol className="mt-2 space-y-1.5 text-xs leading-6 text-ink-700">
+                    {summary.reviewPlan.map((step) => (
+                      <li key={step}>- {step}</li>
+                    ))}
+                  </ol>
+                </div>
+
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   <button
-                    onClick={() => showToast("Resumo copiado")}
+                    onClick={async () => {
+                      const textToCopy = [
+                        summary.title,
+                        "",
+                        "Pontos-chave:",
+                        ...summary.corePoints.map((point) => `- ${point}`),
+                        "",
+                        "Plano de 10 minutos:",
+                        ...summary.reviewPlan.map((step) => `- ${step}`),
+                      ].join("\n");
+                      await navigator.clipboard.writeText(textToCopy);
+                      showToast("Resumo copiado");
+                    }}
                     className="btn-soft px-2.5 py-1.5 text-xs"
                   >
                     <Copy size={12} className="mr-1 inline" /> Copiar
