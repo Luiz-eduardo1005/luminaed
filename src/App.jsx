@@ -27,7 +27,7 @@ import TopBar from "./components/layout/TopBar";
 import RightPanel from "./components/layout/RightPanel";
 import PostCard from "./components/social/PostCard";
 import SubjectCard from "./components/study/SubjectCard";
-import { brand, currentUser, disciplineContent, messages, notifications, posts, subjects } from "./data/mockData";
+import { brand, currentUser, disciplineContent, feedbackFormUrl, messages, notifications, posts, subjects } from "./data/mockData";
 import { FeedSkeleton, Skeleton } from "./components/ui/Skeleton";
 import EmptyState from "./components/ui/EmptyState";
 import MobileNav from "./components/ui/MobileNav";
@@ -432,7 +432,6 @@ function ModulePage() {
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [summaryMode, setSummaryMode] = useState("modulo");
   const { showToast } = useToast();
-  const siteFeedbackFormUrl = "";
   const allQuestionsAnswered =
     moduleData?.quiz?.length > 0 &&
     moduleData.quiz.every((question) => selectedAnswers[question.id] !== undefined);
@@ -733,22 +732,20 @@ function ModulePage() {
               >
                 Verificar respostas
               </button>
-              {quizSubmitted ? (
-                <a
-                  href={siteFeedbackFormUrl || "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(event) => {
-                    if (!siteFeedbackFormUrl) {
-                      event.preventDefault();
-                      showToast("Link de avaliação será adicionado em breve");
-                    }
-                  }}
-                  className="btn-soft w-full sm:w-auto"
-                >
-                  Avaliar o site
-                </a>
-              ) : null}
+              <a
+                href={feedbackFormUrl || "#"}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(event) => {
+                  if (!feedbackFormUrl) {
+                    event.preventDefault();
+                    showToast("Link de avaliação será adicionado em breve");
+                  }
+                }}
+                className="btn-soft w-full sm:w-auto"
+              >
+                Avaliar o site
+              </a>
             </div>
           </article>
         </div>

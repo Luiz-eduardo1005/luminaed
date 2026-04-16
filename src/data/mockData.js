@@ -14,6 +14,8 @@ export const brand = {
   slogan: "Aprender junto, evoluir todo dia.",
 };
 
+export const feedbackFormUrl = "";
+
 export const currentUser = {
   id: "u0",
   name: "UsuarioTest",

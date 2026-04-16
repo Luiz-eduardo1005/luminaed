@@ -10,7 +10,8 @@ import {
   TrendingUp,
   PenSquare,
 } from "lucide-react";
-import { currentUser, menuItems } from "../../data/mockData";
+import { feedbackFormUrl, currentUser, menuItems } from "../../data/mockData";
+import { useToast } from "../ui/Toast";
 
 function toPath(label) {
   const map = {
@@ -27,6 +28,7 @@ function toPath(label) {
 }
 
 export default function SideNav() {
+  const { showToast } = useToast();
   const iconMap = {
     Início: House,
     Explorar: Compass,
@@ -73,6 +75,20 @@ export default function SideNav() {
           <PenSquare size={15} />
           Publicar
         </button>
+        <a
+          href={feedbackFormUrl || "#"}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(event) => {
+            if (!feedbackFormUrl) {
+              event.preventDefault();
+              showToast("Link de avaliação será adicionado em breve");
+            }
+          }}
+          className="btn-soft mt-2 w-full"
+        >
+          Avaliar o site
+        </a>
       </nav>
 
       <div className="panel panel-hover mt-auto flex items-center gap-3">
