@@ -36,14 +36,17 @@ export default function RightPanel() {
         <p className="text-sm font-bold text-ink-900">Sugestões para seguir</p>
         <div className="mt-3 space-y-2.5">
           {suggestions.map((s) => (
-            <div key={s.username} className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-slate-50/60 p-2.5">
+            <div
+              key={s.username}
+              className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-slate-50/60 p-2.5 dark:border-slate-700 dark:bg-slate-800/80"
+            >
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-ink-900">{s.name}</p>
-                <p className="truncate text-xs text-ink-500">@{s.username}</p>
+                <p className="text-sm font-semibold text-ink-900 dark:text-slate-100">{s.name}</p>
+                <p className="truncate text-xs text-ink-500 dark:text-slate-400">@{s.username}</p>
               </div>
               <button
                 onClick={() => showToast(`Agora você segue @${s.username}`)}
-                className="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-700 transition hover:bg-slate-100"
+                className="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-700 transition hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
               >
                 Seguir
               </button>
