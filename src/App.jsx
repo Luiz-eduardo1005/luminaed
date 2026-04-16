@@ -432,6 +432,10 @@ function ModulePage() {
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [summaryMode, setSummaryMode] = useState("modulo");
   const { showToast } = useToast();
+  const siteFeedbackFormUrl = "";
+  const allQuestionsAnswered =
+    moduleData?.quiz?.length > 0 &&
+    moduleData.quiz.every((question) => selectedAnswers[question.id] !== undefined);
 
   if (!subject || !moduleData) return <Navigate to="/app/estudos" replace />;
   useEffect(() => {
@@ -526,6 +530,10 @@ function ModulePage() {
   }
 
   function submitQuiz() {
+    if (!allQuestionsAnswered) {
+      showToast("Responda todas as questões antes de verificar");
+      return;
+    }
     setQuizSubmitted(true);
     const total = moduleData.quiz.length;
     const hits = moduleData.quiz.filter((q) => selectedAnswers[q.id] === q.answer).length;
@@ -718,9 +726,29 @@ function ModulePage() {
                 </div>
               ))}
 
-              <button onClick={submitQuiz} className="btn-primary w-full sm:w-auto">
+              <button
+                onClick={submitQuiz}
+                disabled={!allQuestionsAnswered}
+                className={`btn-primary w-full sm:w-auto ${allQuestionsAnswered ? "" : "cursor-not-allowed opacity-60"}`}
+              >
                 Verificar respostas
               </button>
+              {quizSubmitted ? (
+                <a
+                  href={siteFeedbackFormUrl || "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(event) => {
+                    if (!siteFeedbackFormUrl) {
+                      event.preventDefault();
+                      showToast("Link de avaliação será adicionado em breve");
+                    }
+                  }}
+                  className="btn-soft w-full sm:w-auto"
+                >
+                  Avaliar o site
+                </a>
+              ) : null}
             </div>
           </article>
         </div>
