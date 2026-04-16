@@ -39,7 +39,7 @@ export default function SideNav() {
   };
 
   return (
-    <aside className="hidden w-72 flex-col gap-3 xl:flex">
+    <aside className="hidden w-72 self-start flex-col gap-3 xl:flex">
       <div className="panel flex items-center gap-3">
         <div className="rounded-2xl bg-brand-600 p-2.5 text-white shadow-card">
           <GraduationCap size={18} />
