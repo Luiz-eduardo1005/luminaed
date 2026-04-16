@@ -17,7 +17,7 @@ export const brand = {
 export const currentUser = {
   id: "u0",
   name: "UsuarioTest",
-  username: "lari.estuda",
+  username: "usuario.test",
   avatar: "https://api.dicebear.com/8.x/thumbs/svg?seed=UsuarioTest",
   bio: "1º ano | focada em evoluir em exatas sem surtar.",
   streak: 9,
