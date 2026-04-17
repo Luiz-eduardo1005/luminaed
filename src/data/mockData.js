@@ -15,7 +15,7 @@ export const brand = {
 };
 
 export const feedbackFormUrl =
-  "https://docs.google.com/forms/d/e/1FAIpQLSdl_dL2HWgJQyKHC--JPpr-Y5N90ipbo2Y9bcS73ypjGpEJ3w/viewform";
+  "https://docs.google.com/forms/d/e/1FAIpQLSfdPyUsLcGp2J7BuSTVzag8OYy2lOPf5kEGabvhvAqfFUfKWA/formResponse";
 
 export const currentUser = {
   id: "u0",
